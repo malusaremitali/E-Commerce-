@@ -1,0 +1,209 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    width: 100%;
+    min-height: 100vh;
+    background: #f5f6ff;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* ================= NAVBAR ================= */
+nav {
+    height: 70px;
+    width: 100%;
+    background-color: white;
+    box-shadow: 0 0 8px #121213;
+    display: flex;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.left {
+    height: 100%;
+    width: 60%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px 0 100px;
+}
+
+.left img {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+}
+
+.left input {
+    width: 600px;
+    height: 30px;
+    border-radius: 10px;
+    text-align: center;
+    background-color: #e2f3f7;
+    border: none;
+}
+
+.right {
+    height: 100%;
+    width: 25%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding-right: 80px;
+}
+
+.right a {
+    text-decoration: none;
+    color: black;
+}
+
+.cartImg {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+}
+
+/* ================= PRODUCT CONTAINER ================= */
+#cnt {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 25px;
+    padding: 25px;
+}
+
+/* ================= PRODUCT CARD ================= */
+.card {
+    width: 330px;
+    background: rgb(241, 228, 210);
+    border: 2px solid rgb(82, 2, 2);
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    transition: .3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+}
+
+.card:hover {
+    transform: translateY(-6px);
+}
+
+.up {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.up img {
+    width: 90%;
+    height: 260px;
+    object-fit: contain;
+}
+
+.up h2 {
+    font-size: 16px;
+    text-align: center;
+    padding: 10px;
+}
+
+/* ================= CARD BOTTOM ================= */
+.down {
+    border-top: 1px solid #630303;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 18px;
+}
+
+.down button {
+    height: 36px;
+    width: 110px;
+    background: rgb(54, 125, 207);
+    color: white;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+}
+
+.down p {
+    font-size: 18px;
+    font-weight: bold;
+    color: #1a8c3a;
+}
+
+/* ================= FOOTER ================= */
+footer {
+    background-color: white;
+    color: black;
+    text-align: center;
+    padding: 12px;
+    margin-top: 20px;
+}
+
+/* ================= RESPONSIVE ================= */
+
+/* Tablet */
+@media (max-width: 992px) {
+    .left {
+        width: 70%;
+        padding: 0 20px;
+    }
+
+    .left input {
+        width: 350px;
+    }
+
+    .right {
+        width: 30%;
+        padding-right: 20px;
+    }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    nav {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .left {
+        width: 100%;
+        flex-direction: column;
+        gap: 10px;
+        padding: 10px;
+    }
+
+    .left input {
+        width: 90%;
+    }
+
+    .right {
+        width: 100%;
+        justify-content: center;
+        gap: 20px;
+        padding: 10px 0;
+    }
+
+    .card {
+        width: 95%;
+    }
+}
+
+/* Small Mobile */
+@media (max-width: 480px) {
+    .down {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .down button {
+        width: 100%;
+    }
+}

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products</title>
+    <link rel="stylesheet" href="index.css">
+    
+</head>
+<body>
+
+<header>
+    <nav>
+         <div class="left">
+            <img src="https://img.pikbest.com/backgrounds/20250326/3d-render-minimalist-e-commerce-logo-with-shopping-cart-design_11628971.jpg!bw700" alt="">
+            <input type="search" placeholder="search here" id="search">
+        </div>
+
+        <div class="right">
+            <a href="">Login</a>
+            <a href="cart.html">
+                 <img class="cartImg" src="https://static.vecteezy.com/system/resources/previews/004/999/463/non_2x/shopping-cart-icon-illustration-free-vector.jpg">
+            </a>
+            <a href="">Contact</a>
+        </div>
+    </nav>
+
+    <div id="cnt"></div>
+
+    <footer class="footer">
+    
+        <div class="footer-content">
+         <div class="footer-section">
+            <h3>FakeStore</h3>
+            <p><b>Your one-stop shop for quality products at the best prices.</b></p>
+        </div>
+        <br>
+        <p>© 2025 FakeStore | All Rights Reserved</p>
+        <p>Made by Mitali Malusare</p>
+    </div>
+</footer>
+
+    <script>
+        let api = "https://fakestoreapi.com/products";
+        let cnt = document.getElementById("cnt");
+        let productData = [];
+
+        function fetchData(url) {
+            fetch(url)
+                .then(res => res.json())
+                .then(data => {
+                    displayData(data)
+                    productData = data;
+                })
+                .catch(err => {
+                    console.log("Error:", err);
+                })
+        }
+
+        function displayData(data){
+            let input = "";
+                    
+                    data.map(val => {
+                        input += `
+            <div class="card" onclick = "gotoProductPage(${val.id})">
+                <div class="up">
+                    <img src="${val.image}" alt="${val.title}">
+                    <h2>${val.title}</h2>
+                </div>
+
+                <div class="down">
+                    <button onClick="storeIncart(${val.id})">Add To Cart</button>
+                    <p>$${val.price}</p>
+                </div>
+            </div>
+            `;
+                    })
+                    cnt.innerHTML = input;
+        }
+
+        fetchData(api);
+        function storeIncart(id) {
+            event.stopPropagation()
+            // console.log(id);
+            let singleProductData = productData.find((val) => { return val.id == id });
+            // console.log(singleProductData);
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+            let matchingProducts = cart.find((val) => {
+                return val.id == singleProductData.id
+            })
+            if (matchingProducts) {
+                alert("Product Already Exist")
+            }
+            else {
+                cart.push(singleProductData);
+                alert("Product added to cart");
+                localStorage.setItem("cart", JSON.stringify(cart));
+            }
+        }
+          //View Product
+        function gotoProductPage(id) {
+            console.log("Your product", id);
+            localStorage.setItem("id" ,id)
+            window.location.href = "productView.html"
+        }
+
+        // Logic for search bar
+
+        let search = document.getElementById("search")
+        search.addEventListener("input" , (e)=>{
+            console.log(e.target.value);
+            let result = productData.filter((val)=>{
+                return val.title.toUpperCase().includes(e.target.value.toUpperCase())
+            })
+            console.log(result);
+            displayData(result)
+        })
+</script>
+
+</body>
+</html>

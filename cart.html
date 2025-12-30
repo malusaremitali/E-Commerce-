@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Cart</title>
+    <link rel="stylesheet" href="cart.css">
+</head>
+
+<body>
+
+    <h1>My Cart</h1>
+
+    <div id="cart-container"></div>
+
+    <div id="total"></div>
+
+    <footer class="footer">
+    
+        <div class="footer-content">
+         <div class="footer-section">
+            <h3>FakeStore</h3>
+            <p><b>Your one-stop shop for quality products at the best prices.</b></p>
+        </div>
+        <br>
+        <p>© 2025 FakeStore | All Rights Reserved</p>
+        <p>Made by Mitali Malusare</p>
+    </div>
+</footer>
+
+    <script>
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+        let container = document.getElementById("cart-container");
+        let totalDiv = document.getElementById("total");
+
+        function displayCart() {
+            if (cart.length === 0) {
+                container.innerHTML = "<p class='empty'>Your cart is empty</p>";
+                totalDiv.innerHTML = "";
+                return;
+            }
+
+            let total = 0;
+
+            container.innerHTML = cart.map((item, index) => {
+                let qty = item.qty || 1;
+                total += item.price * qty;
+
+                return `
+                    <div class="cart-item">
+                        <img src="${item.image}">
+                        <div class="cart-details">
+                            <h3>${item.title}</h3>
+                            <p>$${item.price}</p>
+                        </div>
+                        <div class="cart-actions">
+                            <button class="qty-btn" onclick="changeQty(${index}, -1)">−</button>
+                            <span>${qty}</span>
+                            <button class="qty-btn" onclick="changeQty(${index}, 1)">+</button>
+                            <br>
+                            <button class="remove" onclick="removeItem(${index})">Remove</button>
+                        </div>
+                    </div>
+                `;
+            }).join("");
+
+            totalDiv.innerHTML = `Total Amount: $${total.toFixed(2)}`;
+        }
+
+        function changeQty(index, value) {
+            cart[index].qty = (cart[index].qty || 1) + value;
+            if (cart[index].qty < 1) cart[index].qty = 1;
+            localStorage.setItem("cart", JSON.stringify(cart));
+            displayCart();
+        }
+
+        function removeItem(index) {
+            cart.splice(index, 1);
+            localStorage.setItem("cart", JSON.stringify(cart));
+            displayCart();
+        }
+
+        displayCart();
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProductView</title>
+    <link rel="stylesheet" href="productView.css">
+</head>
+<body>
+    <div id="mainCnt"></div>
+   <footer class="footer">
+    
+        <div class="footer-content">
+         <div class="footer-section">
+            <h3>FakeStore</h3>
+            <p><b>Your one-stop shop for quality products at the best prices.</b></p>
+        </div>
+        <br>
+        <p>© 2025 FakeStore | All Rights Reserved</p>
+        <p>Made by Mitali Malusare</p>
+    </div>
+</footer>
+    <script>
+    let id = localStorage.getItem("id");
+    let mainCnt = document.getElementById("mainCnt");
+
+    if (id) {
+        fetch(`https://fakestoreapi.com/products/${id}`)
+            .then(res => res.json())
+            .then(val => {
+                let title = val.title;
+                let description = val.description;
+                let imageUrl = val.image;
+                let price = val.price;
+
+                mainCnt.innerHTML = `
+                    <div>
+                        <img src="${imageUrl}" alt="${title}" />
+                    </div>
+                    <div>
+                        <h2>${title}</h2>
+                        <p>${description}</p>
+                        <p class="price">Price: $${price}</p>
+                        <button id="addToCartBtn">Add to Cart</button>
+                    </div>
+                `;
+
+                document.getElementById("addToCartBtn").addEventListener("click", () => {
+                    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+                    cart.push({
+                        id: val.id,
+                        title: title,
+                        price: price,
+                        image: imageUrl
+                    });
+
+                    localStorage.setItem("cart", JSON.stringify(cart));
+                    alert("Product added to cart!");
+                });
+            })
+            .catch(err => console.error(err));
+    }
+
+    </script>
+</body>
+</html>
